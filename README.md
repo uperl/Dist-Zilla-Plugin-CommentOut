@@ -72,7 +72,11 @@ Block comments are off unless both `begin` and `end` are specified.
 
 # AUTHOR
 
-Graham Ollis <plicease@cpan.org>
+Author: Graham Ollis <plicease@cpan.org>
+
+Contributors:
+
+Mohammad S Anwar (MANWAR)
 
 # COPYRIGHT AND LICENSE
 
