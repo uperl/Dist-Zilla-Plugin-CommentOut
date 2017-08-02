@@ -31,7 +31,7 @@ every call.  To that end I write something like this:
 
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert `/usr/bin/perl` but not `/usr/bin/env perl` to the correct perl
-when the module is distribution is installed.  For some reason this is
+when the distribution is installed.  For some reason this is
 a bug in everyone who uses this common convention but not the toolchain.  There
 is a handy plugin `[SetScriptShebang]` that solves that problem but the 
 `use lib::findbin '../lib';` is problematic because `../lib` relative to
