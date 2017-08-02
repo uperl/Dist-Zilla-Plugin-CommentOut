@@ -11,7 +11,7 @@ Comment out code in your scripts and modules
 
 This plugin comments out lines of code in your Perl scripts or modules with
 the provided identification.  This allows you to have code in your development
-tree that gets commented out before it gets shiped by [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) as a
+tree that gets commented out before it gets shipped by [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) as a
 tarball.
 
 # MOTIVATION
