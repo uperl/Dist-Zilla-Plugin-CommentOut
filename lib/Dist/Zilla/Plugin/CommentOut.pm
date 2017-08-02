@@ -5,7 +5,6 @@ use 5.014;
 package Dist::Zilla::Plugin::CommentOut {
 
   # ABSTRACT: Comment out code in your scripts and modules
-  # VERSION
 
 =head1 SYNOPSIS
 
@@ -62,20 +61,20 @@ Remove lines instead of comment them out.
   with (
     'Dist::Zilla::Role::FileMunger',
     'Dist::Zilla::Role::FileFinderUser' => {
-      default_finders => [ ':ExecFiles' ],
+      default_finders => [ ':ExecFiles', ':InstallModules' ],
     },
   );
 
   use namespace::autoclean;
   
   has id => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => 'Str',
     default => 'dev-only',
   );
   
   has remove => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => 'Int',
     default => 0,
   );
@@ -83,6 +82,7 @@ Remove lines instead of comment them out.
   sub munge_files
   {
     my($self) = @_;
+    $DB::single = 1;
     $self->munge_file($_) for @{ $self->found_files };
     return;
   }
@@ -90,6 +90,11 @@ Remove lines instead of comment them out.
   sub munge_file
   {
     my ($self, $file) = @_;
+    
+    return if $file->is_bytes;
+    
+    $self->log("commenting out @{[ $self->id ]} in @{[ $file->name ]}");
+    
     my $content = $file->content;
     
     my $id = $self->id;
