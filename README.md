@@ -16,8 +16,6 @@ tarball.
 
 # MOTIVATION
 
-(with brief editorial)
-
 I use perlbrew and/or perls installed in funny places and I'd like to be able to run
 executables out of by git checkout tree without invoking `perl -Ilib` on
 every call.  To that end I write something like this:
@@ -31,8 +29,7 @@ every call.  To that end I write something like this:
 
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert `/usr/bin/perl` but not `/usr/bin/env perl` to the correct perl
-when the distribution is installed.  For some reason this is
-a bug in everyone who uses this common convention but not the toolchain.  There
+when the distribution is installed.  There
 is a handy plugin `[SetScriptShebang]` that solves that problem but the 
 `use lib::findbin '../lib';` is problematic because `../lib` relative to
 the install location might not be right!  With both `[SetScriptShebang]`
@@ -57,11 +54,21 @@ are retained.
 
 ## id
 
-The comment id to search for.
+The comment id to search for.  The default is `dev-only`.
 
 ## remove
 
 Remove lines instead of comment them out.
+
+## begin
+
+For block comments, the id to use for the beginning of the block.
+Block comments are off unless both `begin` and `end` are specified.
+
+## end
+
+For block comments, the id to use for the beginning of the block.
+Block comments are off unless both `begin` and `end` are specified.
 
 # AUTHOR
 

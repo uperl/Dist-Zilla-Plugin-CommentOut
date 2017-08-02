@@ -20,11 +20,8 @@ subtest defaults => sub {
   
   $tzil->build;
   
-  ok 1;
-  
   my($script) = grep { $_->name =~ /^bin/ } @{ $tzil->files };
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
-  my($test)   = grep { $_->name =~ /^t\// }   @{ $tzil->files };
 
   is($script->content, <<'EOF', 'script content');
 #!/usr/bin/env perl
@@ -67,11 +64,8 @@ subtest remove => sub {
   
   $tzil->build;
   
-  ok 1;
-  
   my($script) = grep { $_->name =~ /^bin/ } @{ $tzil->files };
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
-  my($test)   = grep { $_->name =~ /^t\// }   @{ $tzil->files };
 
   is($script->content, <<'EOF', 'script content');
 #!/usr/bin/env perl
@@ -91,6 +85,40 @@ use strict;
 use warnings;
 
 
+
+1;
+EOF
+  
+};
+
+subtest 'begin and end' => sub {
+
+  my $tzil = Builder->from_config(
+    { dist_root => 'corpus/Foo-Bar-Baz1' },
+    {
+      add_files => {
+        'source/dist.ini' => simple_ini({},
+          [ 'GatherDir'  => {} ],
+          [ 'ExecDir'    => {} ],
+          [ 'CommentOut' => { begin => 'dev-only-begin', end => 'dev-only-end' } ],
+        )
+      }
+    }
+  );
+  
+  $tzil->build;
+  
+  my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
+
+  is($pm->content, <<'EOF', 'pm content');
+package Foo::Bar::Baz1;
+
+# dev-only-begin
+#use strict;
+#use warnings;
+#
+#our $VERSION = 'dev';
+# dev-only-end
 
 1;
 EOF

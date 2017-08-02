@@ -20,8 +20,6 @@ tarball.
 
 =head1 MOTIVATION
 
-(with brief editorial)
-
 I use perlbrew and/or perls installed in funny places and I'd like to be able to run
 executables out of by git checkout tree without invoking C<perl -Ilib> on
 every call.  To that end I write something like this:
@@ -35,8 +33,7 @@ every call.  To that end I write something like this:
 
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert C</usr/bin/perl> but not C</usr/bin/env perl> to the correct perl
-when the distribution is installed.  For some reason this is
-a bug in everyone who uses this common convention but not the toolchain.  There
+when the distribution is installed.  There
 is a handy plugin C<[SetScriptShebang]> that solves that problem but the 
 C<use lib::findbin '../lib';> is problematic because C<../lib> relative to
 the install location might not be right!  With both C<[SetScriptShebang]>
@@ -61,11 +58,21 @@ are retained.
 
 =head2 id
 
-The comment id to search for.
+The comment id to search for.  The default is C<dev-only>.
 
 =head2 remove
 
 Remove lines instead of comment them out.
+
+=head2 begin
+
+For block comments, the id to use for the beginning of the block.
+Block comments are off unless both C<begin> and C<end> are specified.
+
+=head2 end
+
+For block comments, the id to use for the beginning of the block.
+Block comments are off unless both C<begin> and C<end> are specified.
 
 =cut
 
@@ -91,6 +98,16 @@ Remove lines instead of comment them out.
     default => 0,
   );
   
+  has begin => (
+    is      => 'rw',
+    isa     => 'Str',
+  );
+
+  has end => (
+    is      => 'rw',
+    isa     => 'Str',
+  );
+  
   sub munge_files
   {
     my($self) = @_;
@@ -110,11 +127,47 @@ Remove lines instead of comment them out.
     my $content = $file->content;
     
     my $id = $self->id;
+
+    if($id)
+    {    
+      if($self->remove)
+      { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/\n/mg }
+      else
+      { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/#$1/mg }
+    }
     
-    if($self->remove)
-    { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/\n/mg }
-    else
-    { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/#$1/mg }
+    if($self->begin && $self->end)
+    {
+      my $begin = $self->begin;
+      my $end   = $self->end;
+      $begin = qr{^\s*#\s*\Q$begin\E\s*$};
+      $end   = qr{^\s*#\s*\Q$end\E\s*$};
+      
+      my @lines = split /\n/, $content;
+      my $in = 0;
+      for(@lines)
+      {
+        if(!$in)
+        {
+          if($_ =~ $begin)
+          {
+            $in = 1;
+          }
+        }
+        else
+        {
+          if($_ =~ $end)
+          {
+            $in = 0;
+          }
+          else
+          {
+            $_ =~ s/^/#/;
+          }
+        }
+      }
+      $content = join "\n", @lines, '';
+    }
     
     $file->content($content);
     return;
