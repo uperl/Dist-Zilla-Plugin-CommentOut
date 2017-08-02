@@ -74,6 +74,18 @@ Block comments are off unless both C<begin> and C<end> are specified.
 For block comments, the id to use for the beginning of the block.
 Block comments are off unless both C<begin> and C<end> are specified.
 
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Dist::Zilla::Plugin::Comment>
+
+Does something very similar.  I did actually do a survay of Dist::Zilla
+plugins before writing this one, but apparently I missed this one.  Anyway
+I prefer C<[CommentOut]> as it is configurable.
+
+=back
+
 =cut
 
   use Moose;

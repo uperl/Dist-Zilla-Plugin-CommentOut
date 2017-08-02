@@ -70,6 +70,14 @@ Block comments are off unless both `begin` and `end` are specified.
 For block comments, the id to use for the beginning of the block.
 Block comments are off unless both `begin` and `end` are specified.
 
+# SEE ALSO
+
+- [Dist::Zilla::Plugin::Comment](https://metacpan.org/pod/Dist::Zilla::Plugin::Comment)
+
+    Does something very similar.  I did actually do a survay of Dist::Zilla
+    plugins before writing this one, but apparently I missed this one.  Anyway
+    I prefer `[CommentOut]` as it is configurable.
+
 # AUTHOR
 
 Author: Graham Ollis <plicease@cpan.org>
