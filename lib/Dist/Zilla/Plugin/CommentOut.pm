@@ -152,6 +152,7 @@ Block comments are off unless both C<begin> and C<end> are specified.
           if($_ =~ $begin)
           {
             $in = 1;
+            $_ = '' if $self->remove;
           }
         }
         else
@@ -159,10 +160,14 @@ Block comments are off unless both C<begin> and C<end> are specified.
           if($_ =~ $end)
           {
             $in = 0;
+            $_ = '' if $self->remove;
           }
           else
           {
-            $_ =~ s/^/#/;
+            if($self->remove)
+            { $_ = '' }
+            else
+            { $_ =~ s/^/#/ }
           }
         }
       }
