@@ -112,9 +112,9 @@ Remove lines instead of comment them out.
     my $id = $self->id;
     
     if($self->remove)
-    { $content =~ s/^(.*?#\s*$id\s*)$/\n/mg }
+    { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/\n/mg }
     else
-    { $content =~ s/^(.*?#\s*$id\s*)$/#$1/mg }
+    { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/#$1/mg }
     
     $file->content($content);
     return;
