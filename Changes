@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Fixed bug where remove would change line numbers
+  - First CPAN release
 
 0.01      2017-08-01 20:57:13 -0400
   - initial version

@@ -14,7 +14,13 @@ the provided identification.  This allows you to have code in your development
 tree that gets commented out before it gets shiped by [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) as a
 tarball.
 
-The motiviation was to be able to have scripts in my dist like this:
+# MOTIVATION
+
+(with brief editorial)
+
+I use perlbrew and/or perls installed in funny places and I'd like to be able to run
+executables out of by git checkout tree without invoking `perl -Ilib` on
+every call.  To that end I write something like this:
 
     #!/usr/bin/env perl
     
@@ -23,8 +29,14 @@ The motiviation was to be able to have scripts in my dist like this:
     use lib::findbin '../lib';  # dev-only
     use App::MyApp;
 
-Which is totally usable from the development tree.  Then I can put this in my
-`dist.ini`:
+That is lovely, except that the main toolchain installers EUMM and MB will
+convert `/usr/bin/perl` but not `/usr/bin/env perl` to the correct perl
+when the module is distribution is installed.  For some reason this is
+a bug in everyone who uses this common convention but not the toolchain.  There
+is a handy plugin `[SetScriptShebang]` that solves that problem but the 
+`use lib::findbin '../lib';` is problematic because `../lib` relative to
+the install location might not be ringht!  With this plugin I can comment it
+fix both problems with these two Dist::Zilla plugins:
 
     [SetScriptShebang]
     [CommentOut]
