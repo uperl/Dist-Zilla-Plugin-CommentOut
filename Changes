@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.03      2017-08-02 11:00:55 -0400
   - Quote id string in regex
   - Add begin and end optional properties
 
