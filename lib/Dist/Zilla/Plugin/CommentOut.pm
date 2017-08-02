@@ -39,8 +39,8 @@ when the distribution is installed.  For some reason this is
 a bug in everyone who uses this common convention but not the toolchain.  There
 is a handy plugin C<[SetScriptShebang]> that solves that problem but the 
 C<use lib::findbin '../lib';> is problematic because C<../lib> relative to
-the install location might not be right!  With this plugin I can comment it
-fix both problems with these two Dist::Zilla plugins:
+the install location might not be right!  With both C<[SetScriptShebang]>
+and this plugin, I can fix both problems:
 
  [SetScriptShebang]
  [CommentOut]
