@@ -1,11 +1,13 @@
-# Dist::Zilla::Plugin::CommentOut [![Build Status](https://secure.travis-ci.org/plicease/Dist-Zilla-Plugin-CommentOut.png)](http://travis-ci.org/plicease/Dist-Zilla-Plugin-CommentOut)
+# Dist::Zilla::Plugin::CommentOut ![linux](https://github.com/plicease/Dist-Zilla-Plugin-CommentOut/workflows/linux/badge.svg) ![macos](https://github.com/plicease/Dist-Zilla-Plugin-CommentOut/workflows/macos/badge.svg) ![windows](https://github.com/plicease/Dist-Zilla-Plugin-CommentOut/workflows/windows/badge.svg) ![cygwin](https://github.com/plicease/Dist-Zilla-Plugin-CommentOut/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/plicease/Dist-Zilla-Plugin-CommentOut/workflows/msys2-mingw/badge.svg)
 
 Comment out code in your scripts and modules
 
 # SYNOPSIS
 
-    [CommentOut]
-    id = dev-only
+```
+[CommentOut]
+id = dev-only
+```
 
 # DESCRIPTION
 
@@ -20,12 +22,14 @@ I use perlbrew and/or perls installed in funny places and I'd like to be able to
 executables out of by git checkout tree without invoking `perl -Ilib` on
 every call.  To that end I write something like this:
 
-    #!/usr/bin/env perl
-    
-    use strict;
-    use warnings;
-    use lib::findbin '../lib';  # dev-only
-    use App::MyApp;
+```perl
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use lib::findbin '../lib';  # dev-only
+use App::MyApp;
+```
 
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert `/usr/bin/perl` but not `/usr/bin/env perl` to the correct perl
@@ -35,17 +39,21 @@ is a handy plugin `[SetScriptShebang]` that solves that problem but the
 the install location might not be right!  With both `[SetScriptShebang]`
 and this plugin, I can fix both problems:
 
-    [SetScriptShebang]
-    [CommentOut]
+```
+[SetScriptShebang]
+[CommentOut]
+```
 
 And my script will be converted to:
 
-    #!perl
-    
-    use strict;
-    use warnings;
-    #use lib::findbin '../lib';  # dev-only
-    use App::MyApp;
+```perl
+#!perl
+
+use strict;
+use warnings;
+#use lib::findbin '../lib';  # dev-only
+use App::MyApp;
+```
 
 Which is the right thing for CPAN.  Since lines are commented out, line numbers
 are retained.
