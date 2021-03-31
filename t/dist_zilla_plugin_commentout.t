@@ -17,9 +17,9 @@ subtest defaults => sub {
       }
     }
   );
-  
+
   $tzil->build;
-  
+
   my($script) = grep { $_->name =~ /^bin/ } @{ $tzil->files };
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
 
@@ -44,7 +44,7 @@ use warnings;
 
 1;
 EOF
-  
+
 };
 
 subtest remove => sub {
@@ -61,9 +61,9 @@ subtest remove => sub {
       }
     }
   );
-  
+
   $tzil->build;
-  
+
   my($script) = grep { $_->name =~ /^bin/ } @{ $tzil->files };
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
 
@@ -88,7 +88,7 @@ use warnings;
 
 1;
 EOF
-  
+
 };
 
 subtest 'begin and end' => sub {
@@ -105,9 +105,9 @@ subtest 'begin and end' => sub {
       }
     }
   );
-  
+
   $tzil->build;
-  
+
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
 
   is($pm->content, <<'EOF', 'pm content');
@@ -122,7 +122,7 @@ package Foo::Bar::Baz1;
 
 1;
 EOF
-  
+
 };
 
 
@@ -140,9 +140,9 @@ subtest 'begin and end and remove' => sub {
       }
     }
   );
-  
+
   $tzil->build;
-  
+
   my($pm)     = grep { $_->name =~ /^lib/ } @{ $tzil->files };
 
   is($pm->content, <<'EOF', 'pm content');
@@ -157,7 +157,7 @@ package Foo::Bar::Baz1;
 
 1;
 EOF
-  
+
 };
 
 done_testing

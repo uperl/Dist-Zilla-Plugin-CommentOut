@@ -34,7 +34,7 @@ every call.  To that end I write something like this:
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert C</usr/bin/perl> but not C</usr/bin/env perl> to the correct perl
 when the distribution is installed.  There
-is a handy plugin C<[SetScriptShebang]> that solves that problem but the 
+is a handy plugin C<[SetScriptShebang]> that solves that problem but the
 C<use lib::findbin '../lib';> is problematic because C<../lib> relative to
 the install location might not be right!  With both C<[SetScriptShebang]>
 and this plugin, I can fix both problems:
@@ -99,19 +99,19 @@ I prefer C<[CommentOut]> as it is configurable.
   );
 
   use namespace::autoclean;
-  
+
   has id => (
     is      => 'rw',
     isa     => 'Str',
     default => 'dev-only',
   );
-  
+
   has remove => (
     is      => 'rw',
     isa     => 'Int',
     default => 0,
   );
-  
+
   has begin => (
     is      => 'rw',
     isa     => 'Str',
@@ -121,38 +121,38 @@ I prefer C<[CommentOut]> as it is configurable.
     is      => 'rw',
     isa     => 'Str',
   );
-  
+
   sub munge_files ($self)
   {
     $self->munge_file($_) for $self->found_files->@*;
     return;
   }
-  
+
   sub munge_file ($self, $file)
   {
     return if $file->is_bytes;
-    
+
     $self->log("commenting out @{[ $self->id ]} in @{[ $file->name ]}");
-    
+
     my $content = $file->content;
-    
+
     my $id = $self->id;
 
     if($id)
-    {    
+    {
       if($self->remove)
       { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/\n/mg }
       else
       { $content =~ s/^(.*?#\s*\Q$id\E\s*)$/#$1/mg }
     }
-    
+
     if($self->begin && $self->end)
     {
       my $begin = $self->begin;
       my $end   = $self->end;
       $begin = qr{^\s*#\s*\Q$begin\E\s*$};
       $end   = qr{^\s*#\s*\Q$end\E\s*$};
-      
+
       my @lines = split /\n/, $content;
       my $in = 0;
       for(@lines)
@@ -177,17 +177,17 @@ I prefer C<[CommentOut]> as it is configurable.
             if($self->remove)
             { $_ = '' }
             else
-            { $_ =~ s/^/#/ }
+            { s/^/#/ }
           }
         }
       }
       $content = join "\n", @lines, '';
     }
-    
+
     $file->content($content);
     return;
   }
-  
+
   __PACKAGE__->meta->make_immutable;
 
 }
