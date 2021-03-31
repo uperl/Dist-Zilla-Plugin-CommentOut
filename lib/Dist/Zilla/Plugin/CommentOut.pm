@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use 5.014;
+use 5.026;
 
 package Dist::Zilla::Plugin::CommentOut {
 
@@ -89,6 +89,8 @@ I prefer C<[CommentOut]> as it is configurable.
 =cut
 
   use Moose;
+  use experimental qw( signatures );
+
   with (
     'Dist::Zilla::Role::FileMunger',
     'Dist::Zilla::Role::FileFinderUser' => {
@@ -120,18 +122,14 @@ I prefer C<[CommentOut]> as it is configurable.
     isa     => 'Str',
   );
   
-  sub munge_files
+  sub munge_files ($self)
   {
-    my($self) = @_;
-    $DB::single = 1;
-    $self->munge_file($_) for @{ $self->found_files };
+    $self->munge_file($_) for $self->found_files->@*;
     return;
   }
   
-  sub munge_file
+  sub munge_file ($self, $file)
   {
-    my ($self, $file) = @_;
-    
     return if $file->is_bytes;
     
     $self->log("commenting out @{[ $self->id ]} in @{[ $file->name ]}");
