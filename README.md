@@ -34,7 +34,7 @@ use App::MyApp;
 That is lovely, except that the main toolchain installers EUMM and MB will
 convert `/usr/bin/perl` but not `/usr/bin/env perl` to the correct perl
 when the distribution is installed.  There
-is a handy plugin `[SetScriptShebang]` that solves that problem but the 
+is a handy plugin `[SetScriptShebang]` that solves that problem but the
 `use lib::findbin '../lib';` is problematic because `../lib` relative to
 the install location might not be right!  With both `[SetScriptShebang]`
 and this plugin, I can fix both problems:
