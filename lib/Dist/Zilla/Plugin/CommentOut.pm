@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use 5.026;
+use 5.024;
 
 package Dist::Zilla::Plugin::CommentOut {
 
