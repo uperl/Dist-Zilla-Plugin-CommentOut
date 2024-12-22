@@ -1,4 +1,4 @@
-# Dist::Zilla::Plugin::CommentOut ![linux](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/macos/badge.svg) ![windows](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/windows/badge.svg) ![msys2-mingw](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/msys2-mingw/badge.svg)
+# Dist::Zilla::Plugin::CommentOut ![linux](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/macos/badge.svg) ![windows](https://github.com/uperl/Dist-Zilla-Plugin-CommentOut/workflows/windows/badge.svg)
 
 Comment out code in your scripts and modules
 
